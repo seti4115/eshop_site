@@ -11,9 +11,13 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from environs import Env
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -22,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-wxdav*(ya+k5n$rd7ier1#3u!i3#s0in3c_u_0hlj2$+8gg6d('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = 'DEBUG'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -41,7 +45,8 @@ INSTALLED_APPS = [
 	'django_render_partial',
 	'crispy_bootstrap5',
 	'crispy_forms',
-	'whitenoise.runserver_nostatic'
+	'whitenoise.runserver_nostatic',
+	'environ'
 
 ]
 
@@ -137,12 +142,20 @@ MEDIA_ROOT = BASE_DIR / 'upload'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = "user_module.UserModel"
-
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-LOGOUT_REDIRECT_URL = ''
+EMAIL_HOST = 'smtp.gmail.com'
+
+EMAIL_USE_TLS = True
+
+EMAIL_PORT = 587
+
+EMAIL_HOST_USER = '1919setareh1919@gmail.com'
+
+EMAIL_HOST_PASSWORD = 'knlk zani mpto hagi'
+
+EMAIL_USE_SSL = False
