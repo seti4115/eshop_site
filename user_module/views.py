@@ -1,4 +1,4 @@
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect, reverse
 from django.utils.crypto import get_random_string
 from django.views import View
@@ -69,7 +69,8 @@ class RegisterView(View):
                 message = f'Hi {new_user.username}, thank you for registering in geeksforgeeks.'
                 email_from = settings.EMAIL_HOST_USER
                 recipient_list = [new_user.email, ]
-                send_mail(subject, message, email_from, recipient_list)
+                email = EmailMessage(subject, message, email_from, recipient_list)
+                email.send()
                 # todo: send email active code
                 return redirect(reverse('login-page'))
 
