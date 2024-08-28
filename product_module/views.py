@@ -1,12 +1,10 @@
-from django.contrib.auth.decorators import login_required
+
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic.detail import SingleObjectMixin
 from user_module.models import UserModel
 from . import models
-# Create your views here.
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
 from .forms import CommentForm
 
@@ -63,14 +61,14 @@ class CommentPost(SingleObjectMixin, FormView):
 
 
 class ProductDetailView(LoginRequiredMixin, View):
-	def get(self, request, *args, **kwargs):
-		if request.user.is_superuser:
-			view = CommentGet.as_view()
-		else:
-			view = CommentGet.as_view()
+
+	@staticmethod
+	def get(request, *args, **kwargs):
+		view = CommentGet.as_view()
 		return view(request, *args, **kwargs)
 
-	def post(self, request, *args, **kwargs):
+	@staticmethod
+	def post(request, *args, **kwargs):
 		view = CommentPost.as_view()
 		return view(request, *args, **kwargs)
 

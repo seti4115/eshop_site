@@ -79,3 +79,7 @@ class RegisterView(View):
         }
 
         return render(request, 'user_module/registered.html', context)
+
+
+class ContactView(TemplateView):
+    template_name = 'user_module/contact.html'

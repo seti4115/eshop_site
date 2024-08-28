@@ -33,4 +33,3 @@ class LoginForm(forms.ModelForm):
             'password': forms.PasswordInput(attrs={'class':'login-form-grids', 'placeholder':'password'})
         }
 
-
