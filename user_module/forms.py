@@ -29,7 +29,15 @@ class LoginForm(forms.ModelForm):
         model = models.UserModel
         fields = ['email', 'password']
         widgets = {
-            'email': forms.EmailInput(attrs={'class':'login-form-grids', 'placeholder':'email'}),
-            'password': forms.PasswordInput(attrs={'class':'login-form-grids', 'placeholder':'password'})
+            'email': forms.EmailInput(attrs={'class': 'login-form-grids', 'placeholder': 'email'}),
+            'password': forms.PasswordInput(attrs={'class': 'login-form-grids', 'placeholder': 'password'})
         }
 
+
+class ForgotPasswordForm(forms.Form):
+    email = forms.EmailField(widget=forms.EmailInput)
+
+
+class ResetPasswordForm(forms.Form):
+    new_pass = forms.CharField(widget=forms.PasswordInput)
+    confirm_new_pass = forms.CharField(widget=forms.PasswordInput)

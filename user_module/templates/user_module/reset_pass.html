@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% block content %}
+    <h2>
+      reset password
+    </h2>
+    <form action="reset_pass.html">
+        {% csrf_token %}
+        {{ reset_pass_form.as_p|crispy }}
+    </form>
+
+{% endblock %}

@@ -1,4 +1,5 @@
 from django.core.mail import EmailMessage
+from django.http import HttpRequest
 from django.shortcuts import render, redirect, reverse
 from django.utils.crypto import get_random_string
 from django.views import View
@@ -10,6 +11,9 @@ from . import forms, models
 
 
 # Create your views here.
+from .forms import ForgotPasswordForm, ResetPasswordForm
+from .models import UserModel
+
 
 class LoginView(FormView):
     template_name = 'user_module/login.html'
@@ -33,6 +37,7 @@ class LoginView(FormView):
 
 
 class LogoutView(View):
+
     def get(self, request, *args, **kwargs):
         logout(request)
         return render(request, 'user_module/logout.html')
@@ -83,3 +88,79 @@ class RegisterView(View):
 
 class ContactView(TemplateView):
     template_name = 'user_module/contact.html'
+
+
+class ActiveAccountView(View):
+
+    def get(self, request: HttpRequest, active_code):
+        user: UserModel = UserModel.objects.filter(email_active_code__iexact=active_code).first()
+        if user is not None:
+            if not user.is_active:
+                user.is_active = True
+                user.email_active_code = get_random_string(72)
+                user.save()
+                # todo: show success message to user
+                return redirect(reverse('login_page'))
+            else:
+                # todo: show your account was activated message to user
+                pass
+
+        return redirect(reverse('not-found-page'))
+
+
+class ForgotPasswordView(View):
+
+    def get(self, request, *args, **kwargs):
+        forgot_pass_form = ForgotPasswordForm()
+        return render(request, 'user_module/forgot_pass.html', {
+            'forgot_pass_form': forgot_pass_form,
+        })
+
+    def post(self, request, *args, **kwargs):
+        forgot_pass_form = ForgotPasswordForm(request.POST)
+        if forgot_pass_form.is_valid():
+            user_email = forgot_pass_form.cleaned_data.get('email')
+            user = UserModel.objects.filter(email__iexact=user_email).first()
+            if user is not None:
+                # todo: send email
+                pass
+            return redirect(reverse('login-page'))
+
+        context = {'forget_pass_form': forgot_pass_form}
+        return render(request, 'user_module/forgot_pass.html', context)
+
+
+class ResetPasswordView(View):
+
+    def get(self, request: HttpRequest, active_code):
+        user: UserModel = UserModel.objects.filter(email_active_code__iexact=active_code).first()
+        if user is None:
+            return redirect(reverse('login-page'))
+
+        reset_pass_form = ResetPasswordForm()
+
+        context = {
+            'reset_pass_form': reset_pass_form,
+            'user': user
+        }
+        return render(request, 'user_module/reset_pass.html', context)
+
+    def post(self, request: HttpRequest, active_code):
+        reset_pass_form = ResetPasswordForm(request.POST)
+        user: UserModel = UserModel.objects.filter(email_active_code__iexact=active_code).first()
+        if reset_pass_form.is_valid():
+            if user is None:
+                return redirect(reverse('login-page'))
+            user_new_pass = reset_pass_form.cleaned_data.get('password')
+            user.set_password(user_new_pass)
+            user.email_active_code = get_random_string(72)
+            user.is_active = True
+            user.save()
+            return redirect(reverse('login-page'))
+
+        context = {
+            'reset_pass_form': reset_pass_form,
+            'user': user
+        }
+
+        return render(request, 'user_module/reset_pass.html', context)
