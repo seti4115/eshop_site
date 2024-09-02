@@ -22,6 +22,7 @@ class CommentModel(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
+    is_best = models.BooleanField(default=False)
 
     def __str__(self):
         return self.comment

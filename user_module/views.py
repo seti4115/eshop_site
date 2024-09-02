@@ -50,7 +50,6 @@ class RegisterView(View):
         context = {
             'form': form
         }
-
         return render(request, 'user_module/registered.html', context)
 
     def post(self, request):
@@ -65,9 +64,10 @@ class RegisterView(View):
             else:
                 new_user = models.UserModel(
                     email=user_email,
-                    email_active_code=get_random_string(128),
                     is_active=False,
-                    username=username)
+                    username=username,
+                    email_active_code=get_random_string(128)
+                    )
                 new_user.set_password(user_password)
                 new_user.save()
                 subject = 'welcome to GFG world'
@@ -97,10 +97,10 @@ class ActiveAccountView(View):
         if user is not None:
             if not user.is_active:
                 user.is_active = True
-                user.email_active_code = get_random_string(72)
+                user.email_active_code = get_random_string(128)
                 user.save()
                 # todo: show success message to user
-                return redirect(reverse('login_page'))
+                return render(request, 'user_module/active_account.html')
             else:
                 # todo: show your account was activated message to user
                 pass
@@ -153,7 +153,7 @@ class ResetPasswordView(View):
                 return redirect(reverse('login-page'))
             user_new_pass = reset_pass_form.cleaned_data.get('password')
             user.set_password(user_new_pass)
-            user.email_active_code = get_random_string(72)
+            user.email_active_code = get_random_string(128)
             user.is_active = True
             user.save()
             return redirect(reverse('login-page'))
@@ -164,3 +164,8 @@ class ResetPasswordView(View):
         }
 
         return render(request, 'user_module/reset_pass.html', context)
+
+
+class ProfileView(View):
+    def get(self, request:HttpRequest, *args, **kwargs):
+        return render(request, 'user_module/profile.html')

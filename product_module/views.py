@@ -12,7 +12,7 @@ from .forms import CommentForm
 class ProductListView(ListView):
 	model = models.ProductModel
 	template_name = 'home_module/index.html'
-	paginate_by = 3
+	paginate_by = 6
 
 	def get_queryset(self):
 		base = super(ProductListView, self).get_queryset()
@@ -21,8 +21,6 @@ class ProductListView(ListView):
 	def get_context_data(self, *, object_list=None, offer=None, **kwargs):
 		context = super(ProductListView, self).get_context_data()
 		context['new_offer'] = self.get_queryset().filter(new_offer=True).order_by('-id')[:4]
-		context['page_obj'] = self.get_queryset()
-		context['user'] = UserModel.objects.all()
 		return context
 
 
