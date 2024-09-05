@@ -1,10 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.urls import reverse
-
-from product_module.models import ProductModel
 # Create your models here.
-from first import settings
 
 
 class UserModel(AbstractUser):
@@ -13,21 +9,3 @@ class UserModel(AbstractUser):
 
     def __str__(self):
         return self.username
-
-
-class CommentModel(models.Model):
-    product = models.ForeignKey(ProductModel, on_delete=models.CASCADE)
-    comment = models.TextField()
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-    )
-    is_best = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.comment
-
-    def get_absolute_url(self):
-        return reverse("home-page")
-
-

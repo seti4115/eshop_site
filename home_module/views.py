@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from site_settings.models import SiteSettingModel
-from user_module.models import CommentModel
+from product_module.models import CommentModel
 
 
 class header_partial(TemplateView):

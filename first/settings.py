@@ -45,7 +45,8 @@ INSTALLED_APPS = [
 	'crispy_bootstrap5',
 	'crispy_forms',
 	'whitenoise.runserver_nostatic',
-	'site_settings'
+	'site_settings',
+	'sorl.thumbnail',
 
 ]
 

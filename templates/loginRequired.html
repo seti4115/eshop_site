@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h3>
+        login required
+    </h3>
+    <a href="{% url 'login-page' %}" class="btn btn-success">
+        login
+    </a>
+{% endblock %}

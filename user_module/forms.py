@@ -1,5 +1,3 @@
-from tkinter.tix import Form
-from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from .models import UserModel
 from . import models
@@ -9,7 +7,9 @@ class RegisterForm(forms.Form):
     username = forms.CharField(max_length=100)
     email = forms.EmailField(widget=forms.EmailInput)
     password = forms.CharField(widget=forms.PasswordInput)
-    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'login-form-grids', 'placeholder': 'password', 'type': 'password'}))
+    confirm_password = forms.CharField(widget=forms.PasswordInput(
+        attrs={'class': 'login-form-grids', 'placeholder': 'password', 'type': 'password'})
+    )
 
     def clean_confirm_password(self):
         password = self.cleaned_data.get('password')

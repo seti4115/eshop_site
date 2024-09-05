@@ -167,5 +167,5 @@ class ResetPasswordView(View):
 
 
 class ProfileView(View):
-    def get(self, request:HttpRequest, *args, **kwargs):
+    def get(self, request: HttpRequest, *args, **kwargs):
         return render(request, 'user_module/profile.html')

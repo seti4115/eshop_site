@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% load thumbnail %}
 {% block content %}
 	<!-- main-slider -->
 		<ul id="demo1">
@@ -71,7 +71,9 @@
 
                                                                     <a href="{% url 'product-detail-page' slug=object.urlname %}">
                                                                         {% if object.image.url %}
-                                                                            <img class="img-product" title=" " alt="can't upload" src="{{ object.image.url }}" />
+                                                                            {% thumbnail object.image "150x150" as im %}
+                                                                                <img alt='cant upload'  class='img-product' src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                                                                            {% endthumbnail %}
                                                                         {% else %}
                                                                             {{ object.title }}
                                                                     {% endif %} </a>

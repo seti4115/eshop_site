@@ -1,5 +1,6 @@
 from django.contrib import admin
 from . import models
+from product_module import models
 
 # Register your models here.
 

@@ -1,12 +1,13 @@
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic.detail import SingleObjectMixin
-from user_module.models import UserModel
 from . import models
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
 from .forms import CommentForm
+
 
 
 class ProductListView(ListView):
@@ -24,13 +25,13 @@ class ProductListView(ListView):
 		return context
 
 
-class CommentGet(DetailView):
+class GetDetailView(DetailView):
 	model = models.ProductModel
 	template_name = 'product_module/single.html'
 	slug_field = 'urlname'
 	slug_url_kwarg = 'slug'
 
-	def get_context_data(self, **kwargs):  # new
+	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['form'] = CommentForm()
 		return context
@@ -44,8 +45,10 @@ class CommentPost(SingleObjectMixin, FormView):
 	slug_url_kwarg = 'slug'
 
 	def post(self, request, *args, **kwargs):
-		self.object = self.get_object()
-		return super().post(request, *args, **kwargs)
+		if request.user.is_authenticated:
+			self.object = self.get_object()
+			return super().post(request, *args, **kwargs)
+		return render(request, 'loginRequired.html')
 
 	def form_valid(self, form):
 		comment = form.save(commit=False)
@@ -58,11 +61,11 @@ class CommentPost(SingleObjectMixin, FormView):
 		return reverse('product-detail-page', kwargs={'slug': self.object.urlname})
 
 
-class ProductDetailView(LoginRequiredMixin, View):
+class ProductDetailView(View):
 
 	@staticmethod
 	def get(request, *args, **kwargs):
-		view = CommentGet.as_view()
+		view = GetDetailView.as_view()
 		return view(request, *args, **kwargs)
 
 	@staticmethod
@@ -78,6 +81,10 @@ class ProductAddView(LoginRequiredMixin, CreateView):
 
 	def get_success_url(self):
 		return reverse_lazy('product-detail-page', kwargs={'slug': self.object.urlname})
+
+	def form_valid(self, form):
+		form.instance.author = self.request.user
+		return super().form_valid(form)
 
 
 class ProductEditeView(LoginRequiredMixin, UpdateView):
