@@ -1,9 +1,13 @@
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
+from django.http import HttpRequest
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic.detail import SingleObjectMixin
+
+from slider.models import SliderModel
 from . import models
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
 from .forms import CommentForm
@@ -13,15 +17,16 @@ from .forms import CommentForm
 class ProductListView(ListView):
 	model = models.ProductModel
 	template_name = 'home_module/index.html'
-	paginate_by = 6
+	paginate_by = 3
 
 	def get_queryset(self):
-		base = super(ProductListView, self).get_queryset()
+		base = super(ProductListView, self).get_queryset().order_by('id')
 		return base
 
 	def get_context_data(self, *, object_list=None, offer=None, **kwargs):
 		context = super(ProductListView, self).get_context_data()
 		context['new_offer'] = self.get_queryset().filter(new_offer=True).order_by('-id')[:4]
+		context['sliders'] = SliderModel.objects.filter(is_active=True)
 		return context
 
 
@@ -63,13 +68,11 @@ class CommentPost(SingleObjectMixin, FormView):
 
 class ProductDetailView(View):
 
-	@staticmethod
-	def get(request, *args, **kwargs):
+	def get(self, request: HttpRequest, *args, **kwargs):
 		view = GetDetailView.as_view()
 		return view(request, *args, **kwargs)
 
-	@staticmethod
-	def post(request, *args, **kwargs):
+	def post(self, request: HttpRequest, *args, **kwargs):
 		view = CommentPost.as_view()
 		return view(request, *args, **kwargs)
 
@@ -90,7 +93,7 @@ class ProductAddView(LoginRequiredMixin, CreateView):
 class ProductEditeView(LoginRequiredMixin, UpdateView):
 	model = models.ProductModel
 	template_name = 'product_module/editProduct.html'
-	fields = ["title", "price"]
+	fields = ["title", "price", 'image', 'new_offer', 'description', 'selected_categories']
 	slug_field = 'urlname'
 	slug_url_kwarg = 'slug'
 
@@ -104,3 +107,19 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
 	success_url = reverse_lazy("home-page")
 	slug_field = 'urlname'
 	slug_url_kwarg = 'slug'
+
+
+class ProductCategoryView(ListView):
+	model = models.ProductModel
+	template_name = 'product_module/categorylist.html'
+
+	def get_context_data(self, *args, **kwargs):
+		context = super(ProductCategoryView, self).get_context_data(*args, **kwargs)
+		return context
+
+	def get_queryset(self):
+		query = super(ProductCategoryView, self).get_queryset()
+		category_name = self.kwargs.get('category')
+		if category_name is not None:
+			query = query.filter(Q(selected_categories__url_title__iexact=category_name))
+		return query

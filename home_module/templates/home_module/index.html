@@ -2,28 +2,19 @@
 {% load static %}
 {% load thumbnail %}
 {% block content %}
+
 	<!-- main-slider -->
 		<ul id="demo1">
-			<li>
-				<img src="/static/images/11.jpg" alt="" />
-				<!--Slider Description example-->
-				<div class="slide-desc">
-					<h3>Buy Rice Products Are Now On Line With Us</h3>
-				</div>
+			{% for slider in sliders %}
+			    <li>
+                    <img src="{{ slider.image.url }}" alt="{{ slider.name }}" />
+                    <!--Slider Description example-->
+                    <div class="slide-desc">
+                        <h3>{{ slider.short_description }}</h3>
+                    </div>
 			</li>
-			<li>
-				<img src="/static/images/22.jpg" alt="" />
-				  <div class="slide-desc">
-					<h3>Whole Spices Products Are Now On Line With Us</h3>
-				</div>
-			</li>
+			{% endfor %}
 
-			<li>
-				<img src="/static/images/44.jpg" alt="" />
-				<div class="slide-desc">
-					<h3>Whole Spices Products Are Now On Line With Us</h3>
-				</div>
-			</li>
 		</ul>
 	<!-- //main-slider -->
 	<!-- //top-header and slider -->
@@ -56,7 +47,8 @@
 								<h5>Advertised this week <a href=""></a></h5>
 								<p class="w3l-ad">We've pulled together all our advertised offers into one place, so you won't miss out on a great deal.</p>
 							</div>
-                            {% for object in  object_list %}
+                            {% if object_list %}
+                                {% for object in  object_list %}
                                     <div class="agile_top_brands_grids product-margin">
                                         <div class="col-md-4 top_brand_left">
                                             <div class="hover14 column">
@@ -70,7 +62,7 @@
                                                                 <div class="snipcart-thumb">
 
                                                                     <a href="{% url 'product-detail-page' slug=object.urlname %}">
-                                                                        {% if object.image.url %}
+                                                                        {% if object.image %}
                                                                             {% thumbnail object.image "150x150" as im %}
                                                                                 <img alt='cant upload'  class='img-product' src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
                                                                             {% endthumbnail %}
@@ -112,6 +104,7 @@
                                         </div>
                                     </div>
 							{% endfor %}
+                            {% endif %}
                             <div class="clearfix"> </div>
 						</div>
 						<div role="tabpanel" class="tab-pane fade" id="tours" aria-labelledby="tours-tab">
@@ -607,7 +600,13 @@
 									<figure>
 										<div class="snipcart-item block">
 											<div class="snipcart-thumb">
-												<a href="{% url 'product-detail-page' slug=product.urlname %}"><img title=" " alt=" " src="{{ product.image.url }}"></a>
+												<a href="{% url 'product-detail-page' slug=product.urlname %}">
+                                                    {% if product.image %}
+                                                        <img title=" " alt=" " src="{{ product.image.url }}">
+                                                    {% else %}
+                                                        image can't uploud
+                                                    {% endif %}
+                                                </a>
 												<p>{{ product.title }}</p>
 												<div class="stars">
 													<i class="fa fa-star blue-star" aria-hidden="true"></i>

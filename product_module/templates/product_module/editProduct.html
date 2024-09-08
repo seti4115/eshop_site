@@ -4,7 +4,7 @@
     <div class="row">
         <div class="row col-md-6 col-md-offset-3">
             <h2 class="col-md-4 col-md-offset-3">edit product</h2>
-            <form method="post" class="col-md-4 col-md-offset-3">
+            <form method="post" enctype="multipart/form-data" class="col-md-4 col-md-offset-3">
             {% csrf_token %}
             {% for field in form %}
                 <p class="form-row">

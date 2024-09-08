@@ -7,6 +7,22 @@ from first import settings
 from user_module.models import UserModel
 
 
+class ProductCategory(models.Model):
+	parent = models.ForeignKey('ProductCategory', null=True, blank=True, on_delete=models.CASCADE)
+	title = models.CharField(max_length=200)
+	url_title = models.CharField(max_length=200, unique=True, editable=False)
+	is_active = models.BooleanField(default=False)
+
+	def __str__(self):
+		return self.title
+
+	def save(
+			self, force_insert=False, force_update=False, using=None, update_fields=None
+	):
+		self.url_title = slugify(self.title)
+		return super(ProductCategory, self).save()
+
+
 class ProductModel(models.Model):
 	title = models.CharField(max_length=150, unique=True)
 	rating = models.PositiveIntegerField(
@@ -19,10 +35,10 @@ class ProductModel(models.Model):
 	image = ImageField(upload_to='images', null=True, blank=True)
 	new_offer = models.BooleanField(default=False)
 	author = models.ForeignKey(UserModel, on_delete=models.CASCADE, null=True, editable=False)
+	description = models.TextField(null=True, blank=True)
+	selected_categories = models.ManyToManyField(ProductCategory)
 
-	def save(
-			self, *args, **kwargs
-	):
+	def save(self, *args, **kwargs):
 		self.price_discount = self.price - ((self.price * self.discount) / 100)
 		self.urlname = slugify(self.title)
 		return super(ProductModel, self).save(*args, **kwargs)

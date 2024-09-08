@@ -2,19 +2,24 @@ from django.contrib import admin
 from django.utils.html import format_html
 
 from . import models
-# Register your models here.
+
+
+@admin.action(description='delete')
+def delete(modeladmin, request, queryset):
+	for a in queryset:
+		a.delete()
 
 
 class ProductAdmin(admin.ModelAdmin):
-
-	list_display = ('title', 'price_discount', 'urlname', 'id',)
+	list_display = ('title', 'price_discount', 'urlname', 'id', 'new_offer')
+	list_editable = ['new_offer']
 	ordering = ['-id']
 
-	def save_model(self, request, obj, form, change):
-		if not change:
-			obj.author = request.user
-			obj.save()
-		return super(ProductAdmin, self).save_model()
+
+class ProductCategoryAdmin(admin.ModelAdmin):
+	list_display = ['title', 'is_active']
+	list_editable = ['is_active']
 
 
 admin.site.register(models.ProductModel, ProductAdmin)
+admin.site.register(models.ProductCategory, ProductCategoryAdmin)

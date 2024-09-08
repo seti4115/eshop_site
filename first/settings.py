@@ -12,11 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -32,6 +29,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+	"admin_interface",
+	"colorfield",
 	'django.contrib.admin',
 	'django.contrib.auth',
 	'django.contrib.contenttypes',
@@ -47,6 +46,9 @@ INSTALLED_APPS = [
 	'whitenoise.runserver_nostatic',
 	'site_settings',
 	'sorl.thumbnail',
+	'customtags',
+	'jalali_date',
+	'slider',
 
 ]
 
@@ -57,14 +59,15 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 AUTH_USER_MODEL = "user_module.UserModel"
 
 MIDDLEWARE = [
-	'django.middleware.security.SecurityMiddleware',
 	'django.contrib.sessions.middleware.SessionMiddleware',
 	'django.middleware.common.CommonMiddleware',
 	'django.middleware.csrf.CsrfViewMiddleware',
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	'django.middleware.security.SecurityMiddleware',
 	"whitenoise.middleware.WhiteNoiseMiddleware",
+	'django.middleware.locale.LocaleMiddleware'
 ]
 
 ROOT_URLCONF = 'first.urls'
@@ -159,3 +162,30 @@ EMAIL_HOST_USER = '1919setareh1919@gmail.com'
 EMAIL_HOST_PASSWORD = 'knlk zani mpto hagi'
 
 EMAIL_USE_SSL = False
+
+JALALI_DATE_DEFAULTS = {
+	'LIST_DISPLAY_AUTO_CONVERT': False,
+	'Strftime': {
+		'date': '%y/%m/%d',
+		'datetime': '%H:%M:%S _ %y/%m/%d',
+	},
+	'Static': {
+		'js': [
+			# loading datepicker
+			'admin/js/django_jalali.min.js',
+			# OR
+			# 'admin/jquery.ui.datepicker.jalali/scripts/jquery.ui.core.js',
+			# 'admin/jquery.ui.datepicker.jalali/scripts/calendar.js',
+			# 'admin/jquery.ui.datepicker.jalali/scripts/jquery.ui.datepicker-cc.js',
+			# 'admin/jquery.ui.datepicker.jalali/scripts/jquery.ui.datepicker-cc-fa.js',
+			# 'admin/js/main.js',
+		],
+		'css': {
+			'all': [
+				'admin/jquery.ui.datepicker.jalali/themes/base/jquery-ui.min.css',
+			]
+		}
+	},
+}
+X_FRAME_OPTIONS = "SAMEORIGIN"
+SILENCED_SYSTEM_CHECKS = ["security.W019"]

@@ -11,7 +11,7 @@
 		<div class="container">
 			<ol class="breadcrumb breadcrumb1 animated wow slideInLeft" data-wow-delay=".5s">
 				<li><a href="{% url 'home-page' %}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>Home</a></li>
-				<li class="active">Singlepage</li>
+				<li class="active">{{ object.title }}</li>
 			</ol>
 		</div>
 	</div>
@@ -21,9 +21,11 @@
 			<div class="agileinfo_single">
                 <h1> <a href=""></a></h1>
 				<div class="col-md-4 agileinfo_single_left">
-                    {% thumbnail object.image "250x250" crop='center' as im %}
-                        <img id="example" src="{{ im.url }}" alt="" class="img-responsive">
-                    {% endthumbnail %}
+                    {% if object.image %}
+                        {% thumbnail object.image "288x214" crop='center' quality=99 as im %}
+                            <img id="example" src="{{ im.url }}" alt="" class="img-responsive">
+                        {% endthumbnail %}
+                    {% endif %}
 				</div>
 				<div class="col-md-8 agileinfo_single_right">
 				<h2>{{ object.title }}</h2>
@@ -41,10 +43,12 @@
 							<label for="rating1">1</label>
 						</span>
 					</div>
-					<div class="w3agile_description">
-						<h4>Description :</h4>
-						<p>{{ object.description }}</p>
-					</div>
+					{% if object.description %}
+					    <div class="w3agile_description">
+                            <h4>Description :</h4>
+                            <p>{{ object.description }}</p>
+                        </div>
+					{% endif %}
 					<div class="snipcart-item block">
 						<div class="snipcart-thumb agileinfo_single_right_snipcart">
 							<h4 class="m-sing">${{ object.price_discount }} <span>${{ object.price }}</span></h4>

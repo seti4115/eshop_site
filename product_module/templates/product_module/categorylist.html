@@ -1,0 +1,344 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% load poll_extras %}
+{% block content %}
+<div id="myTabContent" class="tab-content">
+						<div role="tabpanel" class="tab-pane fade in active" id="expeditions" aria-labelledby="expeditions-tab">
+							<div class="agile-tp">
+								</div>
+                            {% if object_list%}
+                                {% for object in  object_list %}
+                                    <div class="agile_top_brands_grids product-margin">
+                                        <div class="col-md-4 top_brand_left">
+                                            <div class="hover14 column">
+                                                <div class="agile_top_brand_left_grid">
+                                                    <div class="agile_top_brand_left_grid_pos">
+                                                        <img src="/static/images/offer.png" alt=" " class="img-responsive" />
+                                                    </div>
+                                                    <div class="agile_top_brand_left_grid1">
+                                                        <figure>
+                                                            <div class="snipcart-item block" >
+                                                                <div class="snipcart-thumb">
+
+                                                                    <a href="{% url 'product-detail-page' slug=object.urlname %}">
+                                                                        {% if object.image %}
+                                                                            {% thumbnail object.image "150x150" as im %}
+                                                                                <img alt='cant upload'  class='img-product' src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                                                                            {% endthumbnail %}
+                                                                        {% else %}
+                                                                            {{ object.title }}
+                                                                    {% endif %} </a>
+                                                                    <p>{{ object.title }}</p>
+                                                                    <div class="stars">
+                                                                        <i class="fa fa-star blue-star" aria-hidden="true"></i>
+                                                                        <i class="fa fa-star blue-star" aria-hidden="true"></i>
+                                                                        <i class="fa fa-star blue-star" aria-hidden="true"></i>
+                                                                        <i class="fa fa-star blue-star" aria-hidden="true"></i>
+                                                                        <i class="fa fa-star gray-star" aria-hidden="true"></i>
+
+                                                                    </div>
+                                                                    <h4>${{ object.price_discount }} <span>${{ object.price }}</span></h4>
+                                                                </div>
+                                                                <div class="snipcart-details top_brand_home_details">
+                                                                    <form action="#" method="post">
+                                                                        <fieldset>
+                                                                            <input type="hidden" name="cmd" value="_cart" />
+                                                                            <input type="hidden" name="add" value="1" />
+                                                                            <input type="hidden" name="business" value=" " />
+                                                                            <input type="hidden" name="item_name" value="{{ object.title }}" />
+                                                                            <input type="hidden" name="amount" value="{{ object.price_discount }}" />
+                                                                            <input type="hidden" name="discount_amount" value="{{ object.get_discount }}" />
+                                                                            <input type="hidden" name="currency_code" value="USD" />
+                                                                            <input type="hidden" name="return" value=" " />
+                                                                            <input type="hidden" name="cancel_return" value=" " />
+                                                                            <input type="submit" name="submit" value="Add to cart" class="button" />
+                                                                        </fieldset>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </figure>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+							{% endfor %}
+                            {% endif %}
+                            <div class="clearfix"> </div>
+						</div>
+						<div role="tabpanel" class="tab-pane fade" id="tours" aria-labelledby="tours-tab">
+							<div class="agile-tp">
+								<h5>This week</h5>
+								<p class="w3l-ad">We've pulled together all our advertised offers into one place, so you won't miss out on a great deal.</p>
+							</div>
+							<div class="agile_top_brands_grids">
+								<div class="col-md-4 top_brand_left">
+									<div class="hover14 column">
+										<div class="agile_top_brand_left_grid">
+											<div class="agile_top_brand_left_grid_pos">
+												<img src="/static/images/offer.png" alt=" " class="img-responsive" />
+											</div>
+											<div class="agile_top_brand_left_grid1">
+												<figure>
+													<div class="snipcart-item block" >
+														<div class="snipcart-thumb">
+															<a href="products.html"><img title=" " alt=" " src="/static/images/7.png" /></a>
+															<p>Sona-masoori-rice</p>
+															<div class="stars">
+																<i class="fa fa-star blue-star" aria-hidden="true"></i>
+																<i class="fa fa-star blue-star" aria-hidden="true"></i>
+																<i class="fa fa-star blue-star" aria-hidden="true"></i>
+																<i class="fa fa-star blue-star" aria-hidden="true"></i>
+																<i class="fa fa-star gray-star" aria-hidden="true"></i>
+															</div>
+															<h4>$35.99 <span>$55.00</span></h4>
+														</div>
+														<div class="snipcart-details top_brand_home_details">
+															<form action="#" method="post">
+																<fieldset>
+																	<input type="hidden" name="cmd" value="_cart" />
+																	<input type="hidden" name="add" value="1" />
+																	<input type="hidden" name="business" value=" " />
+																	<input type="hidden" name="item_name" value="Fortune Sunflower Oil" />
+																	<input type="hidden" name="amount" value="35.99" />
+																	<input type="hidden" name="discount_amount" value="1.00" />
+																	<input type="hidden" name="currency_code" value="USD" />
+																	<input type="hidden" name="return" value=" " />
+																	<input type="hidden" name="cancel_return" value=" " />
+																	<input type="submit" name="submit" value="Add to cart" class="button" />
+																</fieldset>
+															</form>
+														</div>
+													</div>
+												</figure>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4 top_brand_left">
+									<div class="hover14 column">
+										<div class="agile_top_brand_left_grid">
+											<div class="agile_top_brand_left_grid_pos">
+												<img src="/static/images/offer.png" alt=" " class="img-responsive" />
+											</div>
+											<div class="agile_top_brand_left_grid1">
+												<figure>
+													<div class="snipcart-item block" >
+														<div class="snipcart-thumb">
+															<a href="products.html"><img title=" " alt=" " src="/static/images/8.png" /></a>
+															<p>Milky-mist-paneer</p>
+															<div class="stars">
+																<i class="fa fa-star blue-star" aria-hidden="true"></i>
+																<i class="fa fa-star blue-star" aria-hidden="true"></i>
+																<i class="fa fa-star blue-star" aria-hidden="true"></i>
+																<i class="fa fa-star blue-star" aria-hidden="true"></i>
+																<i class="fa fa-star gray-star" aria-hidden="true"></i>
+															</div>
+															<h4>$30.99 <span>$45.00</span></h4>
+														</div>
+														<div class="snipcart-details top_brand_home_details">
+															<form action="#" method="post">
+																<fieldset>
+																	<input type="hidden" name="cmd" value="_cart" />
+																	<input type="hidden" name="add" value="1" />
+																	<input type="hidden" name="business" value=" " />
+																	<input type="hidden" name="item_name" value="basmati rise" />
+																	<input type="hidden" name="amount" value="30.99" />
+																	<input type="hidden" name="discount_amount" value="1.00" />
+																	<input type="hidden" name="currency_code" value="USD" />
+																	<input type="hidden" name="return" value=" " />
+																	<input type="hidden" name="cancel_return" value=" " />
+																	<input type="submit" name="submit" value="Add to cart" class="button" />
+																</fieldset>
+															</form>
+														</div>
+													</div>
+												</figure>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4 top_brand_left">
+									<div class="hover14 column">
+										<div class="agile_top_brand_left_grid">
+											<div class="agile_top_brand_left_grid_pos">
+												<img src="/static/images/offer.png" alt=" " class="img-responsive" />
+											</div>
+											<div class="agile_top_brand_left_grid_pos">
+												<img src="/static/images/offer.png" alt=" " class="img-responsive" />
+											</div>
+											<div class="agile_top_brand_left_grid1">
+												<figure>
+													<div class="snipcart-item block">
+														<div class="snipcart-thumb">
+															<a href="products.html"><img src="/static/images/9.png" alt=" " class="img-responsive" /></a>
+															<p>Basmati-Rice</p>
+															<div class="stars">
+																<i class="fa fa-star blue-star" aria-hidden="true"></i>
+																<i class="fa fa-star blue-star" aria-hidden="true"></i>
+																<i class="fa fa-star blue-star" aria-hidden="true"></i>
+																<i class="fa fa-star blue-star" aria-hidden="true"></i>
+																<i class="fa fa-star gray-star" aria-hidden="true"></i>
+															</div>
+															<h4>$80.99 <span>$105.00</span></h4>
+														</div>
+														<div class="snipcart-details top_brand_home_details">
+															<form action="#" method="post">
+																<fieldset>
+																	<input type="hidden" name="cmd" value="_cart" />
+																	<input type="hidden" name="add" value="1" />
+																	<input type="hidden" name="business" value=" " />
+																	<input type="hidden" name="item_name" value="Pepsi soft drink" />
+																	<input type="hidden" name="amount" value="80.00" />
+																	<input type="hidden" name="discount_amount" value="1.00" />
+																	<input type="hidden" name="currency_code" value="USD" />
+																	<input type="hidden" name="return" value=" " />
+																	<input type="hidden" name="cancel_return" value=" " />
+																	<input type="submit" name="submit" value="Add to cart" class="button" />
+																</fieldset>
+															</form>
+														</div>
+													</div>
+												</figure>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="clearfix"> </div>
+							</div>
+							<div class="agile_top_brands_grids">
+								<div class="col-md-4 top_brand_left">
+									<div class="hover14 column">
+										<div class="agile_top_brand_left_grid">
+											<div class="agile_top_brand_left_grid_pos">
+												<img src="/static/images/offer.png" alt=" " class="img-responsive" />
+											</div>
+											<div class="agile_top_brand_left_grid1">
+												<figure>
+													<div class="snipcart-item block" >
+														<div class="snipcart-thumb">
+															<a href="products.html"><img title=" " alt=" " src="/static/images/10.png" /></a>
+															<p>Fortune-sunflower</p>
+															<div class="stars">
+																<i class="fa fa-star blue-star" aria-hidden="true"></i>
+																<i class="fa fa-star blue-star" aria-hidden="true"></i>
+																<i class="fa fa-star blue-star" aria-hidden="true"></i>
+																<i class="fa fa-star blue-star" aria-hidden="true"></i>
+																<i class="fa fa-star gray-star" aria-hidden="true"></i>
+															</div>
+															<h4>$20.99 <span>$35.00</span></h4>
+														</div>
+														<div class="snipcart-details top_brand_home_details">
+															<form action="#" method="post">
+																<fieldset>
+																	<input type="hidden" name="cmd" value="_cart" />
+																	<input type="hidden" name="add" value="1" />
+																	<input type="hidden" name="business" value=" " />
+																	<input type="hidden" name="item_name" value="Fortune Sunflower Oil" />
+																	<input type="hidden" name="amount" value="20.99" />
+																	<input type="hidden" name="discount_amount" value="1.00" />
+																	<input type="hidden" name="currency_code" value="USD" />
+																	<input type="hidden" name="return" value=" " />
+																	<input type="hidden" name="cancel_return" value=" " />
+																	<input type="submit" name="submit" value="Add to cart" class="button" />
+																</fieldset>
+															</form>
+														</div>
+													</div>
+												</figure>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4 top_brand_left">
+									<div class="hover14 column">
+										<div class="agile_top_brand_left_grid">
+											<div class="agile_top_brand_left_grid_pos">
+												<img src="/static/images/offer.png" alt=" " class="img-responsive" />
+											</div>
+											<div class="agile_top_brand_left_grid1">
+												<figure>
+													<div class="snipcart-item block" >
+														<div class="snipcart-thumb">
+															<a href="products.html"><img title=" " alt=" " src="/static/images/12.png" /></a>
+															<p>Nestle-a-slim</p>
+															<div class="stars">
+																<i class="fa fa-star blue-star" aria-hidden="true"></i>
+																<i class="fa fa-star blue-star" aria-hidden="true"></i>
+																<i class="fa fa-star blue-star" aria-hidden="true"></i>
+																<i class="fa fa-star blue-star" aria-hidden="true"></i>
+																<i class="fa fa-star gray-star" aria-hidden="true"></i>
+															</div>
+															<h4>$20.99 <span>$35.00</span></h4>
+														</div>
+														<div class="snipcart-details top_brand_home_details">
+															<form action="#" method="post">
+																<fieldset>
+																	<input type="hidden" name="cmd" value="_cart" />
+																	<input type="hidden" name="add" value="1" />
+																	<input type="hidden" name="business" value=" " />
+																	<input type="hidden" name="item_name" value="basmati rise" />
+																	<input type="hidden" name="amount" value="20.99" />
+																	<input type="hidden" name="discount_amount" value="1.00" />
+																	<input type="hidden" name="currency_code" value="USD" />
+																	<input type="hidden" name="return" value=" " />
+																	<input type="hidden" name="cancel_return" value=" " />
+																	<input type="submit" name="submit" value="Add to cart" class="button" />
+																</fieldset>
+															</form>
+														</div>
+													</div>
+												</figure>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4 top_brand_left">
+									<div class="hover14 column">
+										<div class="agile_top_brand_left_grid">
+											<div class="agile_top_brand_left_grid_pos">
+												<img src="/static/images/offer.png" alt=" " class="img-responsive" />
+											</div>
+											<div class="agile_top_brand_left_grid1">
+												<figure>
+													<div class="snipcart-item block">
+														<div class="snipcart-thumb">
+															<a href="products.html"><img src="/static/images/13.png" alt=" " class="img-responsive" /></a>
+															<p>Bread-sandwich</p>
+															<div class="stars">
+																<i class="fa fa-star blue-star" aria-hidden="true"></i>
+																<i class="fa fa-star blue-star" aria-hidden="true"></i>
+																<i class="fa fa-star blue-star" aria-hidden="true"></i>
+																<i class="fa fa-star blue-star" aria-hidden="true"></i>
+																<i class="fa fa-star gray-star" aria-hidden="true"></i>
+															</div>
+															<h4>$40.99 <span>$65.00</span></h4>
+														</div>
+														<div class="snipcart-details top_brand_home_details">
+															<form action="#" method="post">
+																<fieldset>
+																	<input type="hidden" name="cmd" value="_cart" />
+																	<input type="hidden" name="add" value="1" />
+																	<input type="hidden" name="business" value=" " />
+																	<input type="hidden" name="item_name" value="Pepsi soft drink" />
+																	<input type="hidden" name="amount" value="40.00" />
+																	<input type="hidden" name="discount_amount" value="1.00" />
+																	<input type="hidden" name="currency_code" value="USD" />
+																	<input type="hidden" name="return" value=" " />
+																	<input type="hidden" name="cancel_return" value=" " />
+																	<input type="submit" name="submit" value="Add to cart" class="button" />
+																</fieldset>
+															</form>
+														</div>
+													</div>
+												</figure>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="clearfix"> </div>
+							</div>
+						</div>
+					</div>
+
+{% endblock %}

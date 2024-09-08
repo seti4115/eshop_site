@@ -1,4 +1,3 @@
-from django.core.mail import EmailMessage
 from django.http import HttpRequest
 from django.shortcuts import render, redirect, reverse
 from django.utils.crypto import get_random_string
@@ -6,7 +5,9 @@ from django.views import View
 from django.views.generic import FormView, TemplateView
 from django.contrib.auth import login, logout
 
+
 from first import settings
+from utils.email import send_mail
 from . import forms, models
 
 
@@ -70,13 +71,7 @@ class RegisterView(View):
                     )
                 new_user.set_password(user_password)
                 new_user.save()
-                subject = 'welcome to GFG world'
-                message = f'Hi {new_user.username}, thank you for registering in geeksforgeeks.'
-                email_from = settings.EMAIL_HOST_USER
-                recipient_list = [new_user.email, ]
-                email = EmailMessage(subject, message, email_from, recipient_list)
-                email.send()
-                # todo: send email active code
+                send_mail(new_user)
                 return redirect(reverse('login-page'))
 
         context = {
@@ -99,11 +94,9 @@ class ActiveAccountView(View):
                 user.is_active = True
                 user.email_active_code = get_random_string(128)
                 user.save()
-                # todo: show success message to user
-                return render(request, 'user_module/active_account.html')
+                return redirect(reverse('login-page'))
             else:
-                # todo: show your account was activated message to user
-                pass
+                return render(request, 'user_module/active_account.html')
 
         return redirect(reverse('not-found-page'))
 

@@ -1,180 +1,105 @@
 <!-- header -->
 {% load static %}
-	<div class="agileits_header">
-		<div class="container">
-			<div class="w3l_offers">
-				<p>SALE UP TO 70% OFF. USE CODE "SALE70%" . <a href="products.html">SHOP NOW</a></p>
-			</div>
-			<div class="agile-login">
-				<ul>
-                    {% if request.user.is_authenticated %}
-                        <li><a href="{% url 'logout-page' %}"> logout </a></li>
-                        <li><a href="{% url 'profile-page' %}"> my profile </a></li>
-                    {% else %}
-                        <li><a href="{% url 'register-page' %}"> Create Account </a></li>
-					    <li><a href="{% url 'login-page' %}">Login</a></li>
-                    {% endif %}
-					<li><a href="{% url 'contact-page' %}">Help</a></li>
+{% load poll_extras %}
+<div class="agileits_header">
+    <div class="container">
+        <div class="w3l_offers">
+            <p>SALE UP TO 70% OFF. USE CODE "SALE70%" . <a href="products.html">SHOP NOW</a></p>
+        </div>
+        <div class="agile-login">
+            <ul>
+                {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'logout-page' %}"> logout </a></li>
+                    <li><a href="{% url 'profile-page' %}"> my profile </a></li>
+                {% else %}
+                    <li><a href="{% url 'register-page' %}"> Create Account </a></li>
+                    <li><a href="{% url 'login-page' %}">Login</a></li>
+                {% endif %}
+                <li><a href="{% url 'contact-page' %}">Help</a></li>
 
-				</ul>
-			</div>
-			<div class="product_list_header">
-					<form action="#" method="post" class="last">
-						<input type="hidden" name="cmd" value="_cart">
-						<input type="hidden" name="display" value="1">
-						<button class="w3view-cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
-					</form>
-			</div>
-			<div class="clearfix"> </div>
-		</div>
-	</div>
+            </ul>
+        </div>
+        <div class="product_list_header">
+                <form action="#" method="post" class="last">
+                    <input type="hidden" name="cmd" value="_cart">
+                    <input type="hidden" name="display" value="1">
+                    <button class="w3view-cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
+                </form>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+</div>
 
-	<div class="logo_products">
-		<div class="container">
-		<div class="w3ls_logo_products_left1">
-				<ul class="phone_email">
-					<li><i class="fa fa-phone" aria-hidden="true"></i>Order online or call us : {{ site.phone }}</li>
+<div class="logo_products">
+    <div class="container">
+    <div class="w3ls_logo_products_left1">
+            <ul class="phone_email">
+                <li><i class="fa fa-phone" aria-hidden="true"></i>Order online or call us : {{ site.phone }}</li>
 
-				</ul>
-			</div>
-			<div class="w3ls_logo_products_left">
-				<h1><a href="{% url 'home-page' %}">super Market</a></h1>
-			</div>
-		<div class="w3l_search">
-			<form action="#" method="post">
-				<input type="search" name="Search" placeholder="Search for a Product..." required="">
-				<button type="submit" class="btn btn-default search" aria-label="Left Align">
-					<i class="fa fa-search" aria-hidden="true"> </i>
-				</button>
-				<div class="clearfix"></div>
-			</form>
-		</div>
+            </ul>
+        </div>
+        <div class="w3ls_logo_products_left">
+            <h1><a href="{% url 'home-page' %}">{{ site.site_name }}</a></h1>
+        </div>
+    <div class="w3l_search">
+        <form action="#" method="post">
+            <input type="search" name="Search" placeholder="Search for a Product..." required="">
+            <button type="submit" class="btn btn-default search" aria-label="Left Align">
+                <i class="fa fa-search" aria-hidden="true"> </i>
+            </button>
+            <div class="clearfix"></div>
+        </form>
+    </div>
 
-			<div class="clearfix"> </div>
-		</div>
-	</div>
+        <div class="clearfix"> </div>
+    </div>
+</div>
 <!-- //header -->
 <!-- navigation -->
-	<div class="navigation-agileits">
-		<div class="container">
-			<nav class="navbar navbar-default">
-							<!-- Brand and toggle get grouped for better mobile display -->
-							<div class="navbar-header nav_2">
-								<button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
-									<span class="sr-only">Toggle navigation</span>
-									<span class="icon-bar"></span>
-									<span class="icon-bar"></span>
-									<span class="icon-bar"></span>
-								</button>
-							</div>
-							<div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
-								<ul class="nav navbar-nav">
-									<li class="active"><a href="{% url 'home-page' %}" class="act">Home</a></li>
-									<!-- Mega Menu -->
-									<li class="dropdown">
-										<a href="#" class="dropdown-toggle" data-toggle="dropdown">Groceries<b class="caret"></b></a>
-										<ul class="dropdown-menu multi-column columns-3">
-											<div class="row">
-												<div class="multi-gd-img">
-													<ul class="multi-column-dropdown">
-														<h6>All Groceries</h6>
-														<li><a href="#">Dals & Pulses</a></li>
-														<li><a href="#">Almonds</a></li>
-														<li><a href="#">Cashews</a></li>
-														<li><a href="#">Dry Fruit</a></li>
-														<li><a href="#"> Mukhwas </a></li>
-														<li><a href="#">Rice & Rice Products</a></li>
-													</ul>
-												</div>
+<div class="navigation-agileits">
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header nav_2">
+                <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="{% url 'home-page' %}" class="act">Home</a></li>
+                    <!-- Mega Menu -->
+                    {% for main_category in categories %}
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ main_category.title|uppercase }}<b class="caret"></b></a>
 
-											</div>
-										</ul>
-									</li>
-									<li class="dropdown">
-										<a href="#" class="dropdown-toggle" data-toggle="dropdown">Household<b class="caret"></b></a>
-										<ul class="dropdown-menu multi-column columns-3">
-											<div class="row">
-												<div class="multi-gd-img">
-													<ul class="multi-column-dropdown">
-														<h6>All Household</h6>
-														<li><a href="#">Cookware</a></li>
-														<li><a href="#">Dust Pans</a></li>
-														<li><a href="#">Scrubbers</a></li>
-														<li><a href="#">Dust Cloth</a></li>
-														<li><a href="#"> Mops </a></li>
-														<li><a href="#">Kitchenware</a></li>
-													</ul>
-												</div>
-
-
-											</div>
-										</ul>
-									</li>
-									<li class="dropdown">
-										<a href="#" class="dropdown-toggle" data-toggle="dropdown">Personal Care<b class="caret"></b></a>
-										<ul class="dropdown-menu multi-column columns-3">
-											<div class="row">
-												<div class="multi-gd-img">
-													<ul class="multi-column-dropdown">
-														<h6>Baby Care</h6>
-														<li><a href="#">Baby Soap</a></li>
-														<li><a href="#">Baby Care Accessories</a></li>
-														<li><a href="#">Baby Oil & Shampoos</a></li>
-														<li><a href="#">Baby Creams & Lotion</a></li>
-														<li><a href="#"> Baby Powder</a></li>
-														<li><a href="#">Diapers & Wipes</a></li>
-													</ul>
-												</div>
-
-											</div>
-										</ul>
-									</li>
-									<li class="dropdown">
-										<a href="#" class="dropdown-toggle" data-toggle="dropdown">Packaged Foods<b class="caret"></b></a>
-										<ul class="dropdown-menu multi-column columns-3">
-											<div class="row">
-												<div class="multi-gd-img">
-													<ul class="multi-column-dropdown">
-														<h6>All Accessories</h6>
-														<li><a href="#">Baby Food</a></li>
-														<li><a href="#">Dessert Items</a></li>
-														<li><a href="#">Biscuits</a></li>
-														<li><a href="#">Breakfast Cereals</a></li>
-														<li><a href="#"> Canned Food </a></li>
-														<li><a href="#">Chocolates & Sweets</a></li>
-													</ul>
-												</div>
-
-
-											</div>
-										</ul>
-									</li>
-									<li class="dropdown">
-										<a href="#" class="dropdown-toggle" data-toggle="dropdown">Beverages<b class="caret"></b></a>
-										<ul class="dropdown-menu multi-column columns-3">
-											<div class="row">
-												<div class="multi-gd-img">
-													<ul class="multi-column-dropdown">
-														<h6>Tea & Coeffe</h6>
-														<li><a href="#">Green Tea</a></li>
-														<li><a href="#">Ground Coffee</a></li>
-														<li><a href="#">Herbal Tea</a></li>
-														<li><a href="#">Instant Coffee</a></li>
-														<li><a href="#"> Tea </a></li>
-														<li><a href="#">Tea Bags</a></li>
-													</ul>
-												</div>
-
-											</div>
-										</ul>
-									</li>
-									<li><a href="#">Gourmet</a></li>
-									<li><a href="#">Offers</a></li>
-									<li><a href="#">Contact</a></li>
-								</ul>
-							</div>
-							</nav>
-			</div>
-		</div>
-
+                            <ul class="dropdown-menu multi-column columns-3">
+                                <div class="row">
+                                    <div class="multi-gd-img">
+                                        <ul class="multi-column-dropdown">
+                                            <h6>
+                                                <a href="{% url 'category-page' main_category.url_title%}">{{ main_category.title }}</a>
+                                            </h6>
+                                            {% for sub_category in main_category.productcategory_set.all %}
+                                                <li>
+                                                    <a href="{% url 'category-page' sub_category.url_title %}">{{ sub_category }}</a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </ul>
+                        </li>
+                    {% endfor %}
+                    <li><a href="#">Gourmet</a></li>
+                    <li><a href="#">Offers</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            </nav>
+        </div>
+    </div>
 <!-- //navigation -->

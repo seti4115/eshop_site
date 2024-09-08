@@ -1,15 +1,20 @@
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.conf import settings
 
+from user_module.models import UserModel
 
-def send_mail(subject, to, context, template_name):
-    try:
-        html_message=render_to_string(template_name),context
-        plain_email = strip_tags(html_message)
-        from_email = settings.EMAIL_HOST_USER
-        send_mail(subject,plain_email, from_email,[to], html_message=html_message)
 
-    except:
-        pass
+def send_mail(user: UserModel):
+    subject = 'welcome to my website'
+    code = user.email_active_code
+    active_url = f'http://127.0.0.1:8000/active-account/{code}'
+    message = f'''
+    Hi {user.username}, thank you for registering.
+    activate account : {active_url}
+                     '''
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = [user.email, ]
+    email = EmailMessage(subject, message, email_from, recipient_list)
+    email.send()

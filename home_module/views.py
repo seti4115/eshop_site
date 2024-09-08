@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from site_settings.models import SiteSettingModel
-from product_module.models import CommentModel
+from product_module.models import CommentModel, ProductCategory
 
 
 class header_partial(TemplateView):
@@ -10,6 +10,7 @@ class header_partial(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(header_partial, self).get_context_data()
         context['site'] = SiteSettingModel.objects.filter(is_active=True).first()
+        context['categories'] = ProductCategory.objects.filter(is_active=True, parent__isnull=True)
         return context
 
 
